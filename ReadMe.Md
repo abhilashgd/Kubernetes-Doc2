@@ -177,7 +177,7 @@
         - API server is the main entry point for kubernetes cluster. kubectl is the CLI for API server.
         - kubectl is for any type of cluster set up (minikube or cloud)
         
-   ** Commands**
+   ** Install Commands**
    
         $ brew update
         ### VM for minikube
@@ -196,34 +196,111 @@
   **CRUD Commands**
   
         Create deployment - $ kubectl create deployment [name]
-                            example:
+                            example: kubectl create deployment nginx-depl --image=nginx
         
         Edit deployment - $ kubectl edit deployment [name]
                             example:
         
         Delete deployment - $ kubectl delete deployment [name]
                             example:
+        
+        Note: pods are the smallest unit in k8s but we are not creating pods directly. 
+        we create deployments which are abstractionn over the pods.
+        
                             
-  **Status of different k8s components
+   **Status of different k8s components**
   
         kubectl get nodes|pod|services|replicaset|deployment
         
-  **Debugging Tools**
+   **Debugging Tools**
   
         Log to consolde - kubectl logs [pod name]
         get Interactive Terminal - kubectl exec -it [pod name] -- bin/bash
         
+   **Create/Edit deployment Commands**
+    
+    ### create deployment
+    $ kubectl create deployment nginx-depl --image=nginx
+    $ kubectl get deployment
+    $ kubectl get pods
+    $ kubectl get replicaset
+    
+    deployment has blueprint for creating pods
+    rest defaults
+    pod name is made of replicaset id and pod id
+    example: 
+    $ kubectl get po
+    nginx-depl-5ddc44dd46-qhjpm 
+    $ kubectl get replicaset
+    nginx-depl-5ddc44dd46
+    pod id= qhjpm and replicaset id = nginx-depl-5ddc44dd46
+    
+    we wont be creating or updating or managing replicasets. we will be working on deployments directly
+    Deployment manages a Replicaset which inturn manages a pod which is an abstraction of a container
         
-   
+    ### Edit Deployment
+    $ kubectl edit deployment nginx-depl
+    ### scroll to 
+    spec:
+      containers:
+      - image: nginx
+      
+     ### change it to 
+      spec:
+      containers:
+      - image: nginx:1.16
+      ### we should see
+      deployment.apps/nginx-depl edited
+      
+      $ kubectl get po ### should give new pod details with nginx:1.16
+      $ kubectl get replicaset 
+      should give 
+      NAME                    DESIRED   CURRENT   READY   AGE
+        nginx-depl-5ddc44dd46   0         0         0       74m
+        nginx-depl-7d459cf5c8   1         1         1       4m10s
+      nginx-depl-5ddc44dd46 is old replicaset with no pods
+      nginx-depl-7d459cf5c8 is the new replicaset created after we edited
+      
+   **Kubectl debugging - Logs***
+ 
+       $ kubectl get deployment
+       $ kubectl get po
+       $ kubectl logs [pod name] example: kubectl logs nginx-depl-7d459cf5c8-jj25f
+       
+       ### create a mongodb deployment
+       $ kubectl create deployment mongo-depl --image=mongo
+       $ kubectl get pod
+                                                  
+        NAME                          READY   STATUS              RESTARTS   AGE
+        mongo-depl-85ddc6d66-wxmm9    0/1     ContainerCreating   0          40s
+        nginx-depl-7d459cf5c8-jj25f   1/1     Running             0          8m47s
+
+        $ kubectl logs mongo-depl-85ddc6d66-wxmm9
+        $ kubectl get pod
+        $ kubectl describe pod mongo-depl-85ddc6d66-wxmm9
+
+  **kubectl debugging - exec**
+  
+        $ kubectl get pod                       
+            NAME                          READY   STATUS    RESTARTS   AGE
+            mongo-depl-85ddc6d66-wxmm9    1/1     Running   0          5m52s
+            nginx-depl-7d459cf5c8-jj25f   1/1     Running   0          13m
+
+        $ kkubectl exec -it mongo-depl-85ddc6d66-wxmm9 -- bin/bash
+        root@mongo-depl-85ddc6d66-wxmm9:/# exit
         
-  
-  
-  
-  
-  
-  
-  
-  
+        $ kubectl get deployment
+             NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+                mongo-depl   1/1     1            1           8m
+                nginx-depl   1/1     1            1           86m
+                
+**deleting deployments**
+
+        $ kubectl get pod
+        $ kubectl delete deployment mongo-depl
+        deployment.apps "mongo-depl" deleted
+        $ kubectl get pod
+        $ kubectl get replicaset
   
   
   
