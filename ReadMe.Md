@@ -163,7 +163,59 @@
               -each node gets own unique IP address
               -routing network traffic to load balanced services
     
+ # Test/ Local Cluster Set UP
+ 
+   **Minikube** 
+   
+        - creates virtual box on our laptop
+        - node runs in that virtual box
+        - 1 Node k8s cluster for testing purpose
+        
+   **Kubectl**
+   
+        - command line tool for kubernetes cluster
+        - API server is the main entry point for kubernetes cluster. kubectl is the CLI for API server.
+        - kubectl is for any type of cluster set up (minikube or cloud)
+        
+   ** Commands**
+   
+        $ brew update
+        ### VM for minikube
+        $ brew install hyperkit ### requires xcode 9.0+
+        $ brew install minikube minikube has kubectl as dependency so kubectl will get installed along with minikube
+       
+       Check installation
+        $ kubectl version
+        $ minikube version      
+        $ minikube start --memory-4g // to start minikube with 4g memory allocation
+        $ minikube start --vm-driver=hyperkit //to start minikube in vm
+        ### Get status of nodes
+        $ kubectl get nodes
+        $ minikube status
+        
+  **CRUD Commands**
   
+        Create deployment - $ kubectl create deployment [name]
+                            example:
+        
+        Edit deployment - $ kubectl edit deployment [name]
+                            example:
+        
+        Delete deployment - $ kubectl delete deployment [name]
+                            example:
+                            
+  **Status of different k8s components
+  
+        kubectl get nodes|pod|services|replicaset|deployment
+        
+  **Debugging Tools**
+  
+        Log to consolde - kubectl logs [pod name]
+        get Interactive Terminal - kubectl exec -it [pod name] -- bin/bash
+        
+        
+   
+        
   
   
   
