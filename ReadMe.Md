@@ -94,7 +94,62 @@
     Its common practice to host databse applications outside k8s cluster and have just deployments that can scale up or down inside kubernetes cluster
     
 # Kubernetes Architecture
+        
+ **MasterNode**
+ 
+    - Scheduler
+        - watches for new workloads/pods and assigns them to a node based on several scheduling factors
+        - checks nodes if healthy?, enough resouces? port available?
+        -affinity and anti affinity rules etc
+    - api server -for communication 
+        - front end to kubernetes plane
+        -All communications go through API server (both external and internal)
+        - exposes port 443
+        -authentication and authorization checks are performed
+        //command kubectl apply -f <yaml>
+    -cluster store
+      - stores configuration and state of the entire application
+      -etcd
+      -Distributed key value data store
+      -single sourde of truth
+       //command kubectl apply -f <yaml> //yaml file goes all the way into cluster store
+       https://etcd.io/
+       https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/
+      
+    - controller manager
+        - Deamon that manages control loop
+        -controller of controllers
+        -node controller
+            if desired state =1 node, if node fails then node controller brings another node.
+         - watches API server for changes and goal is to check if 
+            desired state== current state else take action to make 
+            desired state== current state
+    -cloud controller manager 
+    //kudectl apply -f ingress.yaml
+    gives load balancer.
+    creates load balancer based on underlying cloud controller provider (aws or azure or google cloud)
 
+**Worker Node**
+
+    - provides running environment for our applications
+      -3 Main components (kublet, container runtime and kube proxy)
+      - KUBELET
+          - Main agent that runs on every node
+          - recieves pod definitions from api server
+          - reports node and pod state to master
+          - interacts with container runtime to run containers associated with the pod
+      -CONTAINER RUNTIME
+          -responsible for pulling images, starting and stopping containers
+          -CRI (container Runtime Interface)
+            - Interface for 3rd party container runtime
+          -Containerd
+            - https://containerd.io/
+      -KUBE PROXY
+          - agent runs on everyone through DeamonSets
+          - Responsible for
+              - local cluster networking
+              -each node gets own unique IP address
+              -routing network traffic to load balanced services
     
   
   
