@@ -30,6 +30,7 @@
     Jobs:https://kubernetes.io/docs/concepts/workloads/controllers/job/
     
     
+    
                          
 # Kubernetes Components
 
@@ -96,7 +97,8 @@
 # Kubernetes Architecture
         
  **MasterNode**
- 
+    
+    - Managing processes are done by master nodes.
     - Scheduler
         - watches for new workloads/pods and assigns them to a node based on several scheduling factors
         - checks nodes if healthy?, enough resouces? port available?
@@ -109,7 +111,11 @@
         //command kubectl apply -f <yaml>
     -cluster store
       - stores configuration and state of the entire application
-      -etcd
+      -etcd 
+            > etcd is the cluster brain
+            > Cluster changes get stored in the key values store
+            >  what resources are available, did the cluser state change, is cluster healthy etc state info is stored in etcd.
+            > (application Data is not stored in etcd).
       -Distributed key value data store
       -single sourde of truth
        //command kubectl apply -f <yaml> //yaml file goes all the way into cluster store
@@ -118,6 +124,7 @@
       
     - controller manager
         - Deamon that manages control loop
+        - detects cluster state changes. 
         -controller of controllers
         -node controller
             if desired state =1 node, if node fails then node controller brings another node.
@@ -132,8 +139,11 @@
 **Worker Node**
 
     - provides running environment for our applications
+    - communication between worker nodes is via services (Load Balancer)
       -3 Main components (kublet, container runtime and kube proxy)
       - KUBELET
+          - interacts with both container and node.
+          - starts the pod with container inside.
           - Main agent that runs on every node
           - recieves pod definitions from api server
           - reports node and pod state to master
@@ -145,6 +155,8 @@
           -Containerd
             - https://containerd.io/
       -KUBE PROXY
+          - responsible for forwarding requests from services to pods.
+          - has intelligent forwarding logic inside which makes sure communication works in a performant way with low overhead. 
           - agent runs on everyone through DeamonSets
           - Responsible for
               - local cluster networking
