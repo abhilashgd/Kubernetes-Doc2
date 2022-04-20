@@ -22,6 +22,12 @@
     Ingres:  https://kubernetes.io/docs/concepts/services-networking/ingress/
     ConfigMap: https://kubernetes.io/docs/concepts/configuration/configmap/
     Secret:  https://kubernetes.io/docs/concepts/configuration/secret/
+    Volumes: https://kubernetes.io/docs/concepts/storage/volumes/
+    Deployments: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+    StatefulSets: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+    Replicaset:https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+    Deamonset:https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+    Jobs:https://kubernetes.io/docs/concepts/workloads/controllers/job/
     
     
                          
@@ -45,7 +51,7 @@
     External Service - is a service that opens communication to external sources.
     Internal service - is the type of sertvice we mention when creating.
     
-  **Ingres**
+  **Ingress**
     
     Instead of service, request first goes to ingress and ingress does the forwarding to the service.
     Database URL we mention usually in the built application. if end point is changed to other db then we need to make changes in application.
@@ -56,12 +62,24 @@
     is External configuration to our application.it usually contains configuraiton data like URL to database or some other service that we use.
     if we change the name of the service say from mongo-db-service to mongo-db then we just change it in configMap.
     
-  **Secret**
+  **Secrets**
     
     Even thoug username and password are external configurations, we dont put credentials in configMap.
     putting credentials inside configmap in a plain text format will be insecure.
     Secret is similar to configmap but it is used to store secret data (like username and password)
+    it is stored in base64 encoded format.
     
+  **Data Storage - Volumes**
+  
+    if pod gets restarted, data will be gone. thats problamatic and inconvenient.
+    database data needs to be persisted on long term. thats why we use another component of kubernetes called as volumes.
+    volumes basically attaches a physical storage on a hard drive to our pod. it could be local or remote.
+    k8s doesnt manage data persistance.
+    
+  **Deployment**
+  
+  
+  **StatefulSet**
     
     
   
