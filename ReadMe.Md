@@ -44,32 +44,33 @@
     Kubernetes provides out of the box virtual network. i.e each pod gets its own ip address not the container.
     pods are ephemaral - they can die easily. new ip address on re-creation of a pod thats why services are used 
     
-  **Service**
+  **Services**
     
     is basically a static(permanent) ip address that is attached to each pod.
     lifecycle of service and pod are not connected. even if pod dies, service and its ip address will stay. 
     External Service - is a service that opens communication to external sources.
     Internal service - is the type of sertvice we mention when creating.
+    It is load balanced.
     
   **Ingress**
     
     Instead of service, request first goes to ingress and ingress does the forwarding to the service.
     Database URL we mention usually in the built application. if end point is changed to other db then we need to make changes in application.
     to avoid this complexity we have configMap.
-    
-  **ConfigMap**
   
+  ** External Configuration using COnfigMap and Secrets**
+  
+    ConfigMap:
     is External configuration to our application.it usually contains configuraiton data like URL to database or some other service that we use.
     if we change the name of the service say from mongo-db-service to mongo-db then we just change it in configMap.
     
-  **Secrets**
-    
+    Secrets:
     Even thoug username and password are external configurations, we dont put credentials in configMap.
     putting credentials inside configmap in a plain text format will be insecure.
     Secret is similar to configmap but it is used to store secret data (like username and password)
     it is stored in base64 encoded format.
     
-  **Data Storage - Volumes**
+  **Data Persistance - Volumes**
   
     if pod gets restarted, data will be gone. thats problamatic and inconvenient.
     database data needs to be persisted on long term. thats why we use another component of kubernetes called as volumes.
@@ -78,11 +79,23 @@
     
   **Deployment**
   
+    Instead of relying on one application pod and one database pod, we are. replicating everything on multiple servers.
+    we will have multiple nodes.
+    it is bluepring for my-app pods.
+    we can scale up or scale down number of replicas we need.
+    database cant be replicated using deployment as database has a state.
+    deployments are for stateless apps.
   
   **StatefulSet**
     
+    this is meant for stateful apps like databases such as mysql, mongodb.
+    It is used for deployment of stateful apps.
+    Deployig database application using stateful sets is not easy. 
+    Its common practice to host databse applications outside k8s cluster and have just deployments that can scale up or down inside kubernetes cluster
     
-  
+# Kubernetes Architecture
+
+    
   
   
   
