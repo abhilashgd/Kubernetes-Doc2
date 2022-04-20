@@ -301,7 +301,38 @@
         deployment.apps "mongo-depl" deleted
         $ kubectl get pod
         $ kubectl get replicaset
-  
+        
+**creating a deployment file**       
+
+        $ touch nginx-deployment.yaml
+        
+        apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: nginx-deployment
+              labels:
+                app: nginx
+            spec:
+              replicas: 1
+              selector:
+                matchLabels:
+                  app: nginx
+              template:
+                metadata:
+                  labels:
+                    app: nginx
+                spec:
+                  containers:
+                  - name: nginx
+                    image: nginx:1.16
+                    ports:
+                    - containerPort: 80
+
+
+        $ kubectl apply -f nginx-deployment.yaml
+        deployment.apps/nginx-deployment created
+        $ kubectl get pod
+        
   
   
   
