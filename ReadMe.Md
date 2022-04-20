@@ -19,6 +19,9 @@
     Nodes:   https://kubernetes.io/docs/concepts/architecture/nodes/
     Pods:    https://kubernetes.io/docs/concepts/workloads/pods/
     Service: https://kubernetes.io/docs/concepts/services-networking/service/
+    Ingres:  https://kubernetes.io/docs/concepts/services-networking/ingress/
+    ConfigMap: https://kubernetes.io/docs/concepts/configuration/configmap/
+    Secret:  https://kubernetes.io/docs/concepts/configuration/secret/
     
     
                          
@@ -41,6 +44,24 @@
     lifecycle of service and pod are not connected. even if pod dies, service and its ip address will stay. 
     External Service - is a service that opens communication to external sources.
     Internal service - is the type of sertvice we mention when creating.
+    
+  **Ingres**
+    
+    Instead of service, request first goes to ingress and ingress does the forwarding to the service.
+    Database URL we mention usually in the built application. if end point is changed to other db then we need to make changes in application.
+    to avoid this complexity we have configMap.
+    
+  **ConfigMap**
+  
+    is External configuration to our application.it usually contains configuraiton data like URL to database or some other service that we use.
+    if we change the name of the service say from mongo-db-service to mongo-db then we just change it in configMap.
+    
+  **Secret**
+    
+    Even thoug username and password are external configurations, we dont put credentials in configMap.
+    putting credentials inside configmap in a plain text format will be insecure.
+    Secret is similar to configmap but it is used to store secret data (like username and password)
+    
     
     
   
