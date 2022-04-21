@@ -333,8 +333,50 @@
         deployment.apps/nginx-deployment created
         $ kubectl get pod
         
+        change replicas to 2 and
+        $ kubectl apply -f nginx-deployment.yaml
+        $ kubectl get pod ### should list two pods
+        
+# K8S YAML Configuration File
   
-  
+   **3 parts of configuration file**
+        
+        1. Metadata
+        2. Specification
+        3. status (it will be automatically generated and added by kubernetes)
+            > kubernetes will compare desired vs actual and if they do not match then it wil fix it
+            > this is the basis of the self healing process
+            > k8s gets status data from etcd
+            
+         Yaml online validators to check if yaml file syntax is correct
+         
+        
+        
+        nginx-deployment.yaml
+        apiVersion: apps/vl
+        kind: Deployment
+        metadata:
+            name: nginx-deployment
+            labels: -
+        spec:
+           replicas: 2
+           selector: -
+           template: -
+           
+        nginx-service.yaml   
+        apiVersion: v1
+        kind: Service
+        metadata:
+            name: nginx-deployment
+        spec:
+           selector: -
+           ports: - 
+           
+        
+        connecting deployments to service to pods
+        Demo
+        
+        
   
   
   
