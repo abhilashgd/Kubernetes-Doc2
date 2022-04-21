@@ -374,7 +374,27 @@
            
         
         connecting deployments to service to pods
-        Demo
+        
+        connection is established using labels and selectors
+        metadata part contains labels
+        specification part contains selectors
+        Example - we mention selector in service which makes a connection between service and pods
+        selector:
+            matchLabels:
+                app: nginx
+                
+         one more thing we need to mention is port
+         inside service
+         ports:
+         - protocol:TCP
+           port: 80
+           targetPort: 8080
+           
+         inside deployment.yaml
+          ports:
+           - containerPort: 8080
+           
+        
         
         
   
