@@ -28,6 +28,7 @@
     Replicaset:https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
     Deamonset:https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
     Jobs:https://kubernetes.io/docs/concepts/workloads/controllers/job/
+    MONGODB Image: https://hub.docker.com/_/mongo
     
     
     
@@ -405,15 +406,51 @@
                 > create an external service to access mongo express pod through a web browser
                     > we b browser URL will be IP address of the Node and port of external Service
                     
+          > Mongo-deployment.yaml
+                Default port of mongodb container is 27017
+                environment variables - MONGO_INITDB_ROOT_USERNAME, MONGO_INITDB_ROOT_PASSWORD
+                
+          > admin user name and password are not entered in configuration file which resides in repository
+          > admin user name and password are stored in secrets which lives in k8s and not in the repository
+            
+          > mongo-secret.yaml
+                $ echo -n 'username' | base64
+                $ echo -n 'password' | base64
+    
+          Note: secrets needs to be created first before the configuration file
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+            $ kubectl apply -f mongo-secret.yaml
+            $ kubectl get secret
+            
+            # https://kubernetes.io/docs/concepts/configuration/secret/
+                apiVersion: v1
+                kind: Secret
+                metadata:
+                  name: mongodb-secret
+                type: Opaque
+                data:
+                  mongo-root-username: dXNlcm5hbWU=
+                  mongo-root-password: cGFzc3dvcmQ=
+                ---
+
+            $ kubectl apply -f mongo-deployment.yaml
+            $ kubectl get all
+            $ kubectl get pod --watch
+            $ kubectl describe pod [pod name]
+    
+            Service config inside mongo-deployment.yaml
+            apiVersion: v1
+                kind: Service
+                metadata:
+                  name: mongodb-service
+                spec:
+                  selector:
+                    app: mongodb
+                  ports:
+                    - protocol: TCP
+                      port: 27017     #service port
+                      targetPort: 27017 #container port
+     
+            $ kubectl apply -f mongo-deployment.yaml
                          
                          
