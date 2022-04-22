@@ -386,6 +386,10 @@
          
          Saving it to a file
          $ kubectl get deployment nginx-deployment -o yaml > nginx-deployment-result.yaml
+         
+         To delete a deployment
+         $ kubectl delete -f nginx-deployment.yaml
+         $ kubectl delete -f nginx-service.yaml
         
         
   
