@@ -348,31 +348,10 @@
             > this is the basis of the self healing process
             > k8s gets status data from etcd
             
-         Yaml online validators to check if yaml file syntax is correct
-         
+        Yaml online validators to check if yaml file syntax is correct
         
-        
-        nginx-deployment.yaml
-        apiVersion: apps/vl
-        kind: Deployment
-        metadata:
-            name: nginx-deployment
-            labels: -
-        spec:
-           replicas: 2
-           selector: -
-           template: -
-           
-        nginx-service.yaml   
-        apiVersion: v1
-        kind: Service
-        metadata:
-            name: nginx-deployment
-        spec:
-           selector: -
-           ports: - 
-           
-        
+        FILE: nginx-deployment.yaml
+                    
         connecting deployments to service to pods
         
         connection is established using labels and selectors
@@ -394,7 +373,19 @@
           ports:
            - containerPort: 8080
            
-        
+         Commands
+         $ kubectl apply -f nginx-deployment.yaml
+         $ kubectl apply -f nginx-service.yaml
+         $ kubectl get po
+         $ kubectl get service
+         $ kubectl describe service nginx-service
+         $ kubectl get pod -o wide
+         
+         To check status automatically generated
+         $ kubectl get deployment nginx-deployment -o yaml
+         
+         Saving it to a file
+         $ kubectl get deployment nginx-deployment -o yaml > nginx-deployment-result.yaml
         
         
   
