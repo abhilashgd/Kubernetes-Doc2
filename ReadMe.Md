@@ -391,7 +391,20 @@
          $ kubectl delete -f nginx-deployment.yaml
          $ kubectl delete -f nginx-service.yaml
         
-        
+ # Complete Application Setup with Kubernetes Components
+ 
+          > Create Mongo DB pod.
+          > Create an internal service so that no external requests are allowed to mongodb pod
+          > Create Mongo Express pod 
+                > mongo express can connect to mongo db through DB URL
+                > DB user name and password to authenticate DB
+                > above degtails (DB URL, DB User and DB password can be passed to mongo express through Deployment.yaml
+                    > create ConfigMap that contains DB URL
+                    > create secret that contains credentials
+                    > reference both inside the deployment.yaml
+                > create an external service to access mongo express pod through a web browser
+                    > we b browser URL will be IP address of the Node and port of external Service
+                    
   
   
   
