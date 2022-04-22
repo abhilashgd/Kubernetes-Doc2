@@ -394,7 +394,8 @@
         
  # Complete Application Setup with Kubernetes Components
  
-          > Create Mongo DB pod.
+   **Create Mongo DB pod**
+   
           > Create an internal service so that no external requests are allowed to mongodb pod
           > Create Mongo Express pod 
                 > mongo express can connect to mongo db through DB URL
@@ -457,6 +458,7 @@
             $ kubectl get pod -o wide
             $ kubectl get all | grep mongodb
             
+   **Mongo Express Deployment and Service and ConfigMap**         
             
             
             
