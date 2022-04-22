@@ -1,0 +1,25 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      # initContainers:
+        # Init containers are exactly like regular containers, except:
+          # - Init containers always run to completion.
+          # - Each init container must complete successfully before the next one starts.
+      containers:
+      - name: mongodb
+        image:  mongo
+       
