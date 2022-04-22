@@ -452,5 +452,21 @@
                       targetPort: 27017 #container port
      
             $ kubectl apply -f mongo-deployment.yaml
-                         
+            $ kubectl get service
+            $ kubectl describe service mongodb-service
+            $ kubectl get pod -o wide
+            $ kubectl get all | grep mongodb
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
                          
