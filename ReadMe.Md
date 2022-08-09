@@ -3,6 +3,7 @@
     Officical Definition - Open Source Container Orchestration Tool
                          - Originally Developed by google
                          - helps us manage containerised applications in different deployment environments
+                         - its an application orchestrator. It deploys and manages our applications. scales up and down accrding to our demand
                          
     The need for a container Orchestration tool
                          - trend from monolith to microservices
